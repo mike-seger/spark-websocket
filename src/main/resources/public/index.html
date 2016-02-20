@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WebsSockets</title>
     <link rel="stylesheet" href="style.css">
@@ -8,7 +9,9 @@
 <body>
     <div id="chatControls">
         <input id="message" placeholder="Type your message">
-        <button id="send">Send</button>
+		<button id="send">Send</button>
+ 		<label><input type="checkbox"id="connected"> Connected </label>
+        <button id="clear">Clear History</button>
     </div>
     <ul id="userlist"> <!-- Built by JS --> </ul>
     <div id="chat">    <!-- Built by JS --> </div>

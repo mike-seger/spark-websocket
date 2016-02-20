@@ -20,6 +20,12 @@ input {
     margin: 5px 0;
 }
 
+input[type=checkbox] {
+    width: 20px;
+    padding: 5px;
+    margin: 5px 0;
+}
+
 button {
     float: right;
 }
@@ -29,7 +35,6 @@ li {
 }
 
 #chatControls {
-    overflow: auto;
     margin: 0 0 5px 0
 }
 
