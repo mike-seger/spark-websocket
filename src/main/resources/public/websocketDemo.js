@@ -93,7 +93,8 @@ function id(id) {
 function localDate(date) {
 	var local = new Date(date);
 	local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-	return local.toJSON().slice(0, 19).replace("T"," ");
+	return local.toJSON().slice(0, 18).replace("T"," ");
 }
+
 setupWebSocket(false);
 
