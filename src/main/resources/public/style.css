@@ -49,6 +49,10 @@ li {
     top: 11px;
 }
 
+#userName {
+    font-weight: bold;
+}
+
 #chat p {
     margin: 5px 0;
     font-weight: 300

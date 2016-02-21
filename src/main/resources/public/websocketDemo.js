@@ -8,30 +8,26 @@ function disconnectWebSocket() {
 }
 function releaseWebSocket(automatic) {
 	this.webSocket = null;
-	insert("chat", "disconnected<br/>");
-	check("connected", false);
+	updateConnectionStatus(false, automatic);
 }
 function hasWebSocket() {
 	return this.webSocket != null;
 }
-function setupWebSocket(automatic) {
+function setupWebSocket(userTriggered) {
 	if(this.webSocket == null) {
 		this.webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/chat/");
 		this.webSocket.onmessage = function (msg) { updateChat(msg); };
 		//this.webSocket.onclose = function () { releaseWebSocket(); };
 		this.webSocket.onclose = function () { 
-			releaseWebSocket(true); 
+			releaseWebSocket(false);
 			//setTimeout(setupWebSocket, 1000);
 		};
-		insert("chat", "connected<br/>");
-		if(automatic)
-			check("connected", true);
-		console.log("New WebSocket Created");
-	}	
+		updateConnectionStatus(true, userTriggered);
+	}
 }
 
 id("connected").addEventListener("change", function () {
-	if(!hasWebSocket()) setupWebSocket(false);
+	if(!hasWebSocket()) setupWebSocket(true);
 	else disconnectWebSocket(false); });
 id("clear").addEventListener("click", function () {
     clear("chat"); });
@@ -52,10 +48,25 @@ function sendMessage(message) {
 function updateChat(msg) {
     var data = JSON.parse(msg.data);
     insert("chat", data.userMessage);
+    id("userName").innerHTML = data.userName;
     id("userlist").innerHTML = "";
     data.userlist.forEach(function (user) {
         insert("userlist", "<li>" + user + "</li>");
     });
+}
+
+function updateConnectionStatus(connected, userTriggered) {
+    if( connected ) {
+		console.log("New Connection");
+    	insert("chat", localDate(new Date()) + ": connected<br/>");
+    	if(!userTriggered) {
+    	    check("connected", true);
+    	}
+    } else {
+    	insert("chat", localDate(new Date()) + ": disconnected<br/>");
+    	check("connected", false);
+	}
+
 }
 
 //Helper function for inserting HTML as the first child of an element
@@ -79,5 +90,10 @@ function id(id) {
     return document.getElementById(id);
 }
 
-setupWebSocket(true);
+function localDate(date) {
+	var local = new Date(date);
+	local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+	return local.toJSON().slice(0, 19).replace("T"," ");
+}
+setupWebSocket(false);
 

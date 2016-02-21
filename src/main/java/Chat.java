@@ -48,6 +48,7 @@ public class Chat {
             try {	
                 session.getRemote().sendString(String.valueOf(new JSONObject()
                     .put("userMessage", createHtmlMessageFromSender(sender, message))
+                    .put("userName", userUsernameMap.get(session))
                     .put("userlist", userUsernameMap.values())
                 ));
             } catch (Exception e) {
