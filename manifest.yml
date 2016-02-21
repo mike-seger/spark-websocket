@@ -1,0 +1,7 @@
+applications:
+- name: net128-sparkchat
+  memory: 1024M
+  instances: 1
+  path: target/sparksocket-1.0-SNAPSHOT-jar-with-dependencies.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  stack: cflinuxfs2
